@@ -50,7 +50,7 @@ public class MySQLDBConnection implements DBConnection {
 	}
 
 	@Override
-	public void setVisitedRestaurants(String userId, List<String> businessIds) {
+	public boolean setVisitedRestaurants(String userId, List<String> businessIds) {
 		String query = "INSERT INTO history (user_id, business_id) VALUES (?, ?)";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
@@ -59,8 +59,10 @@ public class MySQLDBConnection implements DBConnection {
 				statement.setString(2, businessId);
 				statement.execute();
 			}
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
